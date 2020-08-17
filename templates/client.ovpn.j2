@@ -4,7 +4,7 @@ tls-client
 ca {{ confdir }}/certs/ca.crt
 cert {{ confdir }}/certs/{{ item.name }}.crt
 key {{ confdir }}/private/{{ item.name }}.key
-tls-crypt {{ confdir }}/myvpn.tlsauth
+tls-crypt {{ confdir }}/{{ openvpn_static_encryption_key_filename }}
 remote-cert-eku "TLS Web Server Authentication"
 cipher {{ openvpn_cipher }}
 
