@@ -1,5 +1,5 @@
 {% if item.ip is defined %}
-ifconfig-push {{ item.ip }}
+ifconfig-push {{ item.ip }} 255.255.255.0
 {% endif %}
 {% if item.route is defined %}
 iroute {{ item.route }}
