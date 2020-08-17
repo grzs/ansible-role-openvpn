@@ -45,6 +45,7 @@
 
 - name: fetch tarballs
   fetch:
+    flat: yes
     src: "{{ openvpn_publication_location }}/{{ item.name }}.tgz"
-    dest: "{{ openvpn_fetch_client_config_to }}"
+    dest: "{{ openvpn_fetch_client_config_to }}/{{ item.name }}.tgz"
   loop: "{{ openvpn_clients }}"

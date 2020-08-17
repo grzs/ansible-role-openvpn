@@ -16,6 +16,8 @@
   loop:
     - "{{ openvpn_config_directory }}/private"
     - "{{ openvpn_config_directory }}/certs"
+    - "{{ openvpn_config_directory }}/ccd"
+    - "{{ openvpn_log_dir }}"
 
 - name: set server certificate parameters
   set_fact:
@@ -28,6 +30,12 @@
 
 - block:
     - name: configure openvpn client
+      template:
+        src: client-config.j2
+        dest: "{{ openvpn_config_directory }}/ccd/{{ item.name }}"
+      loop: "{{ openvpn_clients }}"
+
+    - name: generate client config file
       template:
         src: "{{ openvpn_client_config_file }}.j2"
         dest: "{{ openvpn_config_directory }}/{{ item.name }}.ovpn"
@@ -52,7 +60,8 @@
       copy:
         remote_src: yes
         src: "{{ openvpn_ca_path }}/subject_keys/server.pem"
-        dest: "{{ openvpn_config_directory }}/private/server.pem" 
+        dest: "{{ openvpn_config_directory }}/private/server.pem"
+        mode: 0600
 
     - name: copy server and ca certificates to config directory
       copy:
@@ -92,6 +101,11 @@
       command: openssl dhparam -out {{ openvpn_dh2048_key }} 2048
       args:
         creates: "{{ openvpn_dh2048_key }}"
+
+    - name: copy sample server.conf
+      copy:
+        src: server-sample.conf
+        dest: "{{ openvpn_config_directory }}/server-sample.conf"
 
     - name: configure openvpn server
       template:

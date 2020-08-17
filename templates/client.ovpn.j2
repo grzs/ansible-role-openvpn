@@ -1,14 +1,21 @@
 client
 tls-client
-ca {{ openvpn_config_directory }}/certs/ca.crt
-cert {{ openvpn_config_directory }}/certs/{{ item.name }}.crt
-key {{ openvpn_config_directory }}/private/{{ item.name }}.key
-tls-crypt {{ openvpn_static_encryption_key }}
+{% set confdir = (item.confdir | default(openvpn_config_directory)) %}
+ca {{ confdir }}/certs/ca.crt
+cert {{ confdir }}/certs/{{ item.name }}.crt
+key {{ confdir }}/private/{{ item.name }}.key
+tls-crypt {{ confdir }}/myvpn.tlsauth
 remote-cert-eku "TLS Web Server Authentication"
+cipher {{ openvpn_cipher }}
+
 proto udp
-remote {{ openvpn_client_server }} 1194 udp
+remote {{ openvpn_client_server }} {{ openvpn_port }} udp
 dev tun
 topology subnet
+{% if openvpn_compression == 'legacy' %}
+comp-lzo
+{% endif %}
+
 pull
 user nobody
-group {{ openvpn_group }}
+group nogroup

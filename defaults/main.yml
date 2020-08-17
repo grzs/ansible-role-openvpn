@@ -10,3 +10,25 @@ openvpn_publication_location: /tmp/pub
 # List of vpn client certificate extensions
 client_extensions:
   - "extendedKeyUsage = clientAuth"
+
+# server configuration options
+#openvpn_listen_ip: "1.2.3.4"
+openvpn_port: 1194
+openvpn_subnet: "10.8.0.0 255.255.255.0"
+#openvpn_push_routes: ['ip1 netmask1','ip2 netmask2']
+#openvpn_max_clients: 100
+openvpn_is_default_gw: no
+#openvpn_push_dns: ['1.1.1.1','1.0.0.1']
+#openvpn_compression: yes|no|'legacy'
+openvpn_tls_direction: '0'
+openvpn_cipher: AES-256-CBC
+openvpn_log_dir: /var/log/openvpn
+openvpn_log_append: no
+openvpn_log_verbosity: '3'
+#openvpn_log_mute: 20
+
+# clients
+# openvpn_clients:
+#   - name: foo
+#     ip: '10.8.0.8 10.8.0.9'
+#     route: '192.168.10.0 255.255.255.0'
