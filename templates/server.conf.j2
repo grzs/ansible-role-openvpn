@@ -69,6 +69,8 @@ tls-crypt {{ openvpn_config_directory }}/{{
 cipher {{ openvpn_cipher }}
 remote-cert-eku "TLS Web Client Authentication"
 
+crl-verify {{ openvpn_config_directory }}/crl.pem
+
 # logging
 status {{ openvpn_log_dir }}/openvpn-status.log
 log{% if openvpn_log_append | bool %}-append{% endif %} {{ openvpn_log_dir }}/openvpn.log

@@ -55,6 +55,12 @@
   vars:
     ca_init: no
       
+- name: crl file is up-to-date
+  copy:
+    remote_src: yes
+    src: "{{ openvpn_ca_path }}/crl.pem"
+    dest: "{{ openvpn_config_directory }}/crl.pem"
+
 - block:
     - name: copy server key to config directory
       copy:
